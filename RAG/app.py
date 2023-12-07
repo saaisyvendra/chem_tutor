@@ -10,7 +10,7 @@ import os
 st.set_page_config(page_title="Chat with KK_Tutor, powered by KK", page_icon="👨‍🏫", layout="centered", initial_sidebar_state="auto", menu_items=None)
 st.title(f"**KK_Tutor** 👨‍🏫")
 st.info("You can ask anything about unit 1!", icon="📃")
-os.environ['GOOGLE_API_KEY'] = 'AIzaSyC166Vxyxy2xsRL0t2cPtUcFC7jKg-xe7E'
+os.environ['GOOGLE_API_KEY'] = st.secrets.api_key
 
 # Initialize chat history
 if "messages" not in st.session_state.keys():
