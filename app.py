@@ -10,7 +10,7 @@ import os
 st.set_page_config(page_title="Chat with KK_Tutor, powered by KK", page_icon="👨‍🏫", layout="centered", initial_sidebar_state="auto", menu_items=None)
 st.title(f"**KK_Tutor** 👨‍🏫")
 st.info("You can ask anything about unit 1!", icon="📃")
-os.environ['GOOGLE_API_KEY'] = 'AIzaSyC166Vxyxy2xsRL0t2cPtUcFC7jKg-xe7E'
+os.environ['GOOGLE_API_KEY'] = st.secrets.api_key
 
 # Initialize chat history
 if "messages" not in st.session_state.keys():
@@ -21,7 +21,7 @@ if "messages" not in st.session_state.keys():
 @st.cache_resource(show_spinner=False)
 def load_data():
     with st.spinner(text="Loading and indexing the resources – hang tight! This should take 1-2 minutes."):
-        docs = SimpleDirectoryReader("./data").load_data()
+        docs = SimpleDirectoryReader(input_dir="./data", recursive=True).load_data()
         llm = PaLM(model="text-curie-001", temperature=0.5)
         embed_model = HuggingFaceEmbedding(model_name="BAAI/bge-large-en-v1.5")
         service_context = ServiceContext.from_defaults(llm=llm, embed_model=embed_model, chunk_size=800, chunk_overlap=20)
@@ -32,17 +32,6 @@ index = load_data()
 
 if "chat_engine" not in st.session_state.keys(): # Initialize the chat engine
 
-    # memory = ChatMemoryBuffer.from_defaults(token_limit=1500)
-    # st.session_state.chat_engine = index.as_chat_engine(
-    #     chat_mode="context",
-    #     memory=memory,
-    #     system_prompt=(
-    #         "You are a chemistry tutor. The user is a student who will have doubts about the context"
-    #         "Refrain from giving single word answers."
-    #         "If the given query is not within the context, do not answer! Say 1Sorry, the given question is out of context!"
-    #         "When necessary, use follow up questions so that the student can understand more on the topic"
-    #     ),
-    # )
     memory = ChatMemoryBuffer.from_defaults(token_limit=3900)
     st.session_state.chat_engine = index.as_chat_engine(
     chat_mode="condense_plus_context",
