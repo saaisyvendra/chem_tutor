@@ -2,4 +2,3 @@ streamlit
 openai
 llama-index
 nltk
-os
