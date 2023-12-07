@@ -32,17 +32,6 @@ index = load_data()
 
 if "chat_engine" not in st.session_state.keys(): # Initialize the chat engine
 
-    # memory = ChatMemoryBuffer.from_defaults(token_limit=1500)
-    # st.session_state.chat_engine = index.as_chat_engine(
-    #     chat_mode="context",
-    #     memory=memory,
-    #     system_prompt=(
-    #         "You are a chemistry tutor. The user is a student who will have doubts about the context"
-    #         "Refrain from giving single word answers."
-    #         "If the given query is not within the context, do not answer! Say 1Sorry, the given question is out of context!"
-    #         "When necessary, use follow up questions so that the student can understand more on the topic"
-    #     ),
-    # )
     memory = ChatMemoryBuffer.from_defaults(token_limit=3900)
     st.session_state.chat_engine = index.as_chat_engine(
     chat_mode="condense_plus_context",
