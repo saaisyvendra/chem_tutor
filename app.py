@@ -5,6 +5,8 @@ from llama_index.llms.palm import PaLM
 from llama_index import ServiceContext
 from llama_index.memory import ChatMemoryBuffer
 import os
+import nltk
+nltk.download('punkt')
 
 st.set_page_config(page_title="Chat with KK_Tutor, powered by KK", page_icon="👨‍🏫", layout="centered", initial_sidebar_state="auto", menu_items=None)
 st.title(f"**KK_Tutor** 👨‍🏫")
