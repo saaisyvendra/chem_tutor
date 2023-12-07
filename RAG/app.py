@@ -21,7 +21,7 @@ if "messages" not in st.session_state.keys():
 @st.cache_resource(show_spinner=False)
 def load_data():
     with st.spinner(text="Loading and indexing the resources – hang tight! This should take 1-2 minutes."):
-        docs = SimpleDirectoryReader("./data").load_data()
+        docs = SimpleDirectoryReader(input_dir="./data", recursive=True).load_data()
         llm = PaLM(model="text-curie-001", temperature=0.5)
         embed_model = HuggingFaceEmbedding(model_name="BAAI/bge-large-en-v1.5")
         service_context = ServiceContext.from_defaults(llm=llm, embed_model=embed_model, chunk_size=800, chunk_overlap=20)
